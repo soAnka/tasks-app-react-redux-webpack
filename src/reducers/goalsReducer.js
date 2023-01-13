@@ -10,12 +10,17 @@ const initialState = {
     }
   }
   
-  export default function goalsReducer(state = initialState, action) {
+  export default function goalsReducer(state = {}, action) {
     switch (action.type) {
+      case 'goals/receiveGoals':
+        return {
+            ...state,
+            ...action.goals
+        }
         case 'goals/addGoal':
             return {
                 ...state,
-                goals: [...state.goals, action.payload]
+               [action.goal.id]: action.goal
             }
         case 'goals/removeGoal':
                 return {
@@ -23,18 +28,14 @@ const initialState = {
                     goals: state.goals.filter((t)=>t.id!==action.removeId)
                 }
         case 'goals/toggleGoal':
-                return {
-                    ...state,
-                    goals: {
-                        ...state.goals,
-                        [action.id]: {
-                            ...state.goals[action.id],
-                            completed: true
-                        }
-                    }
-                    }
+          return {
+            ...state,
+            [action.goal.id]: {
+                ...state[action.goal.id],
+                completed: action.goal.val
+              }
+        }
                 
-
       default:
         return state
     }

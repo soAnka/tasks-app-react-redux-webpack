@@ -1,31 +1,50 @@
-const initialState = {
-    todos: [
-      { id: 0, text: 'Learn React', completed: true },
-      { id: 1, text: 'Learn Redux', completed: false, color: 'purple' },
-      { id: 2, text: 'Build something fun!', completed: false, color: 'blue' }
-    ],
-    filters: {
-      status: 'All',
-      colors: []
-    }
-  }
+// const initialState = {
+//   todos:[],
+//     // todos: [
+//     //   { id: 0, 
+//     //     text: 'Learn React', 
+//     //     completed: false, 
+//     //     hardness: 2, 
+//     //     isFavorite:'not', 
+//     //     date:'1-12-2022' 
+//     //   },
+//     // ],
+//     // filters: {
+//     //   status: 'All',
+//     //   colors: []
+//     // }
+//   }
 
-  console.log(initialState)
+  // console.log(initialState)
   
   // Use the initialState as a default value
-  export default function todosReducer(state = initialState, action) {
+  export default function todosReducer(state = {}, action) {
     // The reducer normally looks at the action type field to decide what happens
     switch (action.type) {
+      case 'todos/receiveTodos':
+        return {
+            ...state,
+            ...action.todos
+        }
         case 'todos/addTodo':
             return {
                 ...state,
-                todos: [...state.todos, action.payload]
+                [action.todo.id]: action.todo
             }
         case 'todos/removeTodo':
                 return {
                     ...state,
                     todos: state.todos.filter((t)=>t.id!==action.removeId)
                 }
+        case 'todos/toggleTodo':
+                return {
+                    ...state,
+                    [action.todo.id]: {
+                        ...state[action.todo.id],
+                        completed: action.todo.val
+                      }
+                }
+
       // Do something here based on the different types of actions
       default:
         // If this reducer doesn't recognize the action type, or doesn't

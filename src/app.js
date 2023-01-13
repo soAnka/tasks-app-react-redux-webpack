@@ -3,42 +3,83 @@ import ReactDOM from 'react-dom/client'
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
 import configureStore from './store/configureStore'
-import { applyMiddleware } from 'redux';
-import logger from './middleware/logger';
-import App from './components/app';
-import { addGoal, removeGoal, toggleGoal } from './actions/goals';
-import { addTodo, removeTodo } from './actions/todo';
+import App from './components/App';
 import { Provider } from 'react-redux';
-
-console.log("working")
-
-var comp = <p>Lorem ipsum</p>
-var rootApp = document.getElementById('app');
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+// import Menu from './components/Menu';
+import { CssBaseline } from '@mui/material';
+import AddTodo from './components/Home';
+import TodosList from './components/TodosList';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { indigo, pink, deepPurple, amber, green, deepOrange, cyan, lightBlue, brown } from '@mui/material/colors';
+import MenuNav from './components/MenuNav';
+import { toggleTodo } from './actions/todo';
 
 const store = configureStore()
 // console.log(store.getState())
-// store.dispatch(addTodo({id:4, text:'Buy a milk', completed: true}))
+
+// store.dispatch(toggleTodo({id:0, completed:true}))
 // console.log(store.getState())
-
-// store.dispatch(removeTodo(0))
-// console.log(store.getState())
-
-// store.dispatch(removeGoal(0));
-// console.log(store.getState())
-
-// store.dispatch(addGoal({id:5, text:'Lorem'}))
-// console.log(store.getState())
-
-// store.dispatch(toggleGoal(1))
-// console.log(store.getState())
-
-
-
 
 // ReactDOM.render(comp, rootApp)
-const root = ReactDOM.createRoot(rootApp)
-root.render(
-    <Provider store={store}>
-        <App />
-    </Provider>
-)
+
+const router = createBrowserRouter([
+    {
+      path: "/",
+      element: <MenuNav />,
+      children: [
+        {
+            path: "/",
+            element: <App />,
+        },
+
+        {
+            path: "/add",
+            element: <AddTodo />,
+        },
+        {
+            path: "/todos",
+            element: <TodosList />,
+        },
+    
+      ]
+    },
+  ]);
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: indigo[600]
+      },
+      secondary: {
+        // main: pink[600],
+        // main: amber[900],
+        // main: deepPurple['A700']
+        main: green['A200'],
+        main: lightBlue[600]
+        // main: cyan[600]
+        // main: deepOrange[600]
+        // main: green[600]
+      },
+      success: {
+        main: cyan[200]
+      },
+      warning: {
+        // main: deepOrange['A700'],
+        main: brown[800]
+      }
+    }
+  });
+
+  // const store = createStore(appReducer, appMiddleware)
+  console.log(store.getState())
+
+
+  ReactDOM.createRoot(document.getElementById("app")).render(
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+    {/* <RouterProvider router={router} /> */}
+    <App store={store} theme={theme} />
+    </ThemeProvider>
+  </Provider>
+  );

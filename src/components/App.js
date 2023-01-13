@@ -1,24 +1,46 @@
-import React from 'react';
-import ReactDOM from 'react-dom'
-import {connect} from 'react-redux'
+import React, { useEffect } from 'react';
+import {connect, useDispatch} from 'react-redux'
+import Home from './Home';
+import AddTodo from './Home';
+
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import Root from '../layouts/Root';
 import TodosList from './TodosList';
+import { handleInitialData } from '../actions/shared';
+import TodoOrGoal from './TodoOrGoal';
 
-console.log("App")
+const router = createBrowserRouter(
+    createRoutesFromElements(
+        <Route path="/" element={<Root />}>
+            <Route index element={<Home />} />
+            <Route  path="/start"  element={<TodoOrGoal />} />
+            <Route path="/add" element={<Home />} />
+            <Route path="/todos" element={<TodosList />} />
+        </Route>
+    )
+);
 
-const App = (props) => {
-    console.log(props)
+
+  const App = (props) => {
+    const dispatch = useDispatch()
+
+
+    useEffect(()=> {
+        dispatch(handleInitialData())
+    },[])
+
     return (
-        <div>
-            <h2>Todos</h2>
-            {/* <TodosList /> */}
-        </div>
+        <RouterProvider router={router} />
     )
 }
 
-const mapStateToProps = (state) => {
+
+const mapStateToProps = ({todos, goals, userChoice}) => {
+
     return {
-        todos:state.todos,
-        goals:state.goals
+        userChoice,
+        todos,
+        goals,
     }
 }
 

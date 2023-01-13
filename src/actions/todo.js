@@ -1,14 +1,8 @@
-const addTodoAction = {
-    type: 'todos/todoAdded',
-    payload: 'Buy milk'
-  }
 
-  export const addTodo = ({text, id, completed}) => {
+  export const addTodo = (todo) => {
     return {
         type: 'todos/addTodo',
-        payload: {
-             id, text, completed
-        }
+        todo
     }
   }
 
@@ -16,5 +10,19 @@ const addTodoAction = {
     return {
         type: 'todos/removeTodo',
         removeId
+    }
+  }
+
+  export const toggleTodo = (todo) => {
+    return {
+        type: 'todos/toggleTodo',
+        todo,
+    }
+  }
+
+  export const receiveTodos = (todos) => {
+    return {
+      type: 'todos/receiveTodos',
+      todos
     }
   }
