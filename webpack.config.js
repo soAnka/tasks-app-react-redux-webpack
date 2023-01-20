@@ -8,7 +8,7 @@ module.exports = {
   output: {
     filename: 'bundle.js',
     path: path.join(__dirname, 'public'),
-    clean: true,
+    clean: false,
   },
   module: {
     rules: [{
@@ -19,7 +19,11 @@ module.exports = {
         {
           test: /\.m?s?css$/,
           use: ['style-loader', 'css-loader', 'sass-loader']
-        }
+        },
+        {
+          test: /\.(png|svg|jpg|jpeg|gif)$/i,
+          type: 'asset/resource',
+        },
       ]
     },
     devtool: 'inline-source-map',

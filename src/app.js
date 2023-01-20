@@ -52,22 +52,20 @@ const router = createBrowserRouter([
         main: indigo[600]
       },
       secondary: {
-        // main: pink[600],
-        // main: amber[900],
-        // main: deepPurple['A700']
-        main: green['A200'],
         main: lightBlue[600]
-        // main: cyan[600]
-        // main: deepOrange[600]
-        // main: green[600]
       },
-      success: {
-        main: cyan[200]
+      favColor: {
+        main: pink[500]
       },
-      warning: {
-        // main: deepOrange['A700'],
-        main: brown[800]
-      }
+      completedTaskColor: {
+        main: cyan[200],
+        contrastText: "rgba(0,0,0,0.8)"
+      },
+      uncompletedTaskColor: {
+        main: brown[800],
+        contrastText: "rgba(255,255,255,1)"
+      },
+     
     }
   });
 

@@ -1,27 +1,27 @@
 import React, { useEffect } from 'react';
 import {connect, useDispatch} from 'react-redux'
 import Home from './Home';
-import AddTodo from './Home';
-
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Root from '../layouts/Root';
 import TodosList from './TodosList';
 import { handleInitialData } from '../actions/shared';
 import TodoOrGoal from './TodoOrGoal';
+import Create from './Create';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
         <Route path="/" element={<Root />}>
             <Route index element={<Home />} />
             <Route  path="/start"  element={<TodoOrGoal />} />
-            <Route path="/add" element={<Home />} />
+            <Route path="/add" element={<Create />} />
             <Route path="/todos" element={<TodosList />} />
+            <Route path="/goals" element={<TodosList />} />
         </Route>
     )
 );
 
 
-  const App = (props) => {
+  const App = () => {
     const dispatch = useDispatch()
 
 

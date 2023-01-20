@@ -3,6 +3,11 @@ import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import { indigo, pink } from '@mui/material/colors';
 import Box from '@mui/material/Box';
+import bg from '../../assets/login_illustration.jpg'
+import greensLeft from '../../assets/greens_left.png'
+import greens from '../../assets/greens.png'
+
+
 
 
 export const StartBtn = styled(Button)(({ theme }) => ({
@@ -35,10 +40,11 @@ export const StartBtn = styled(Button)(({ theme }) => ({
 
   export const ContentBox = styled(Box)(() => ({  
     '&.start_box_description': {
-        background: `url('../../assets/greens_left.png')`,
+        background: `url(${greensLeft})`,
         backgroundRepeat: 'no-repeat',
-        backgroundPosition:'70% 80%',
-        backgroundSize: '25%',
+        backgroundPosition:'50% 100%',
+        backgroundSize: '20%',
+        minHeight: '50vh'
     },
     '&.start_box_buttons':{
         display:'flex',
@@ -46,6 +52,5 @@ export const StartBtn = styled(Button)(({ theme }) => ({
         alignItems: 'center',
         zIndex: 1,
         position: 'relative',
-    
     }
   }));

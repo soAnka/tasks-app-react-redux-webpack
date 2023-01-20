@@ -7,74 +7,65 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { connect } from 'react-redux';
-import Chip from '@mui/material/Chip';
 import Box from '@mui/material/Box';
 import CircleIcon from '@mui/icons-material/Circle';
 import Grid from '@mui/material/Grid';
-import { useTheme } from 'styled-components';
-
-
-const hardness = ['ok', 'easy', 'difficult', 'hard', 'super hard']
+import Task from './Task';
 
 function renderOnScale(value) {
-    let comp = []
-    for(let i = 0; i < 5; i++) {
-        i < value ? comp.push(<CircleIcon key={i} style={{ opacity: 1 }} fontSize="inherit" color="secondary"/>) : comp.push(<CircleIcon key={i} style={{ opacity: 0.4 }} fontSize="inherit" color="secondary"/>)
-    }
-    return <div>{comp}</div>
+  let circlesArray = []
+  for (let i = 0; i < 5; i++) {
+    i < value ? circlesArray.push(<CircleIcon key={i} style={{ opacity: 1 }} fontSize="inherit" color="secondary" />) : circlesArray.push(<CircleIcon key={i} style={{ opacity: 0.2 }} fontSize="inherit" color="neutral" />)
+  }
+  return <div>{circlesArray}</div>
 }
 
-const TodoTable = ({dataList, userChoice }) => {
-  const theme = useTheme()
-    return (
-        <Grid container p={4} >
-        <Grid item xs={12}>
-            <h1>{userChoice.charAt(0).toUpperCase().concat(userChoice.slice(1,5))} Table</h1>
+function taskDuration() {
+  const today = Number(new Date(Date.now()).toLocaleDateString().slice(0, 2))
+
+  return today;
+}
+
+const TodoTable = ({ dataList, userChoice }) => {
+
+  return (
+    <Grid container p={4} >
+      <Grid item xs={12}>
+        <h1>{userChoice.charAt(0).toUpperCase().concat(userChoice.slice(1, 5))} Table</h1>
+      </Grid>
+      <Grid container spacing={2} sx={{ height: '100%' }}>
+        <Grid item xs={12} sm={12} md={12}>
+          <Box sx={{ height: '100%' }}>
+            <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Todo title</TableCell>
+                    <TableCell align="center">Date</TableCell>
+                    <TableCell align="center">Status</TableCell>
+                    <TableCell align="center">Duration</TableCell>
+                    <TableCell align="center">Hardness</TableCell>
+                    <TableCell align="center">Remove</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {dataList.map((todo, index) => {
+                    const durationDaysNum = taskDuration() - Number(todo.date.slice(0, 2))
+                    return <Task type="table" ind={index} key={todo.id} id={todo.id} durationDaysNum={durationDaysNum} renderOnScale={renderOnScale} />
+                  })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
         </Grid>
-        <Grid container spacing={2} sx={{height:'100%'}}>
-            <Grid item xs={12} sm={12} md={12}>
-                <Box sx={{height:'100%'}}>
-            
-                <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Todo title</TableCell>
-              <TableCell align="right">Date</TableCell>
-              <TableCell align="right">Status</TableCell>
-              <TableCell align="right">Duration</TableCell>
-              <TableCell align="right">Hardness</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-          {dataList.map((row, index) => (
-              <TableRow
-                key={row.id}
-                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              >
-                <TableCell component="th" scope="row">
-                  {row.text}
-                </TableCell>
-                <TableCell align="right">{row.date}</TableCell>
-                <TableCell align="right">{row.completed?<Chip label="completed" color='success'/>:<Chip label="incomplete" color="warning" />}</TableCell>
-                <TableCell align="right">2 days</TableCell>
-                <TableCell align="right">
-                    {renderOnScale(row.hardness)}
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-                </Box>
-            </Grid>
-        </Grid>
+      </Grid>
     </Grid>
-    )
+  )
 }
 
-const mapStateToProps = ({todos, goals, userChoice}) => {
-  const dataList = userChoice === 'todos' ? Object.keys(todos).map((t)=>todos[t]) :  Object.keys(goals).map((g)=>goals[g])
+const mapStateToProps = ({ todos, goals, userChoice }) => {
+  const dataList = userChoice === 'todos' ? Object.keys(todos).map((t) => todos[t]) : Object.keys(goals).map((g) => goals[g])
+
   return { dataList, userChoice }
 }
 
