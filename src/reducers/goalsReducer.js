@@ -1,15 +1,3 @@
-const initialState = {
-  goals: [
-    { id: 0, text: 'Learn React Goal', completed: true },
-    { id: 1, text: 'Learn Redux Goal', completed: false, color: 'purple' },
-    { id: 2, text: 'Build something fun goal!', completed: false, color: 'blue' }
-  ],
-  filters: {
-    status: 'All',
-    colors: []
-  }
-}
-
 export default function goalsReducer(state = {}, action) {
   switch (action.type) {
     case 'goals/receiveGoals':
@@ -33,6 +21,14 @@ export default function goalsReducer(state = {}, action) {
         [action.goal.id]: {
           ...state[action.goal.id],
           completed: action.goal.val
+        }
+      }
+    case 'goals/toggleFavGoal':
+      return {
+        ...state,
+        [action.favGoal.id]: {
+          ...state[action.favGoal.id],
+          isFavorite: action.favGoal.favStatus
         }
       }
 

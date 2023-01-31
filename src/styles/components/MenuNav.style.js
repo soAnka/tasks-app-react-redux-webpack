@@ -1,7 +1,4 @@
 import { styled } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-import { indigo, pink } from '@mui/material/colors';
-import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
 
 const drawerWidth = 270;
@@ -21,9 +18,9 @@ const openedMixin = (theme) => ({
       duration: theme.transitions.duration.leavingScreen,
     }),
     overflowX: 'hidden',
-    width: `calc(${theme.spacing(7)} + 1px)`,
+    width: `calc(${theme.spacing(7)})`,
     [theme.breakpoints.up('sm')]: {
-      width: `calc(${theme.spacing(8)} + 1px)`,
+      width: `calc(${theme.spacing(8)} - 9px )`,
     },
   });
 
@@ -94,16 +91,12 @@ export const Drawer = styled(MuiDrawer)(
         backgroundColor: 'rgba(26, 37, 121, 0.2)'
     },
       'a.active': {
-        // backgroundColor: theme.palette.primary.main,
-        // color: 'white'
         color: theme.palette.primary.main
       },
       'svg': {
         color: 'rgba(26, 37, 121, 0.5)'
-        // opacity: 0.5
       },
       'a.active svg': {
-        // color: 'white'
         color: theme.palette.primary.main
       }
     }),

@@ -1,6 +1,5 @@
 const start = new Date(Date.now()).toLocaleDateString()
 let startNum = start.slice(0, 2)
-// let randNum = 
 let startDate = (parseInt(startNum) - 1).toString() + start.slice(2, start.length)
 
 const generateStartDate = () => {
@@ -8,6 +7,10 @@ const generateStartDate = () => {
   let startNum = start.slice(0, 2)
   let startDate = (parseInt(startNum) - 2).toString() + start.slice(2, start.length)
   return startDate;
+}
+
+let filter = {
+  visibilityFilter: 'ALL'
 }
 
 let todos = {

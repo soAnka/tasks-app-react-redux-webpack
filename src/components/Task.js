@@ -1,64 +1,42 @@
-import React, { useState } from "react"
+import React from "react"
 import { useDispatch } from 'react-redux';
-import { removeTodo, toggleTodo } from '../actions/todo';
+import { removeTodo, toggleFavTodo, toggleTodo } from '../actions/todo';
 import Chip from '@mui/material/Chip';
-import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import { connect } from "react-redux"
 import Checkbox from '@mui/material/Checkbox';
-import { styled } from '@mui/material/styles';
-import { removeGoal, toggleGoal } from "../actions/goals";
+import { removeGoal, toggleFavGoal, toggleGoal } from "../actions/goals";
 import { Button } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderRoundedIcon from '@mui/icons-material/FavoriteBorderRounded';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-
-
-const StyledListItem = styled(ListItem)(({ theme }) => ({
-  '[datatest-id]=DeleteIcon': {
-    color: theme.palette.secondary.main
-  },
-  '[datatest-id]=CheckBoxOutlineBlankIcon': {
-    color: theme.palette.secondary.main
-  },
-}))
+import { StyledListItem } from "../styles/components/Task";
 
 
 const Task = ({task, userChoice, ind, durationDaysNum, type, renderOnScale}) => {
-  const [checked, setChecked] = useState([-1]);
   const dispatch = useDispatch()
-  const [isFav, setIsFav] = useState(task.isFavorite)
   const labelId = `checkbox-list-secondary-label-${ind}`;
-  // const hardness = ['ok', 'easy', 'difficult', 'hard', 'super hard']
 
   const removeTask = (removeId) => {
     userChoice === 'todos' ? dispatch(removeTodo(removeId)) : dispatch(removeGoal(removeId))
 }
 
   const toggleIsFavorite = () => {
-    setIsFav(!isFav)
+    const isFav = !task.isFavorite
+
+    const taskFav = { id: task.id, favStatus: isFav}
+    userChoice === 'todos' ? dispatch(toggleFavTodo(taskFav)) : dispatch(toggleFavGoal(taskFav))
+
   }
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    setChecked(newChecked);
-
+  const toggleTask = (task) => () => {
     const todoToToggle = {
       id: task.id,
-      val: newChecked.length === 2 || newChecked.length === 0 ? true : false
+      val: !task.completed
     }
     { userChoice === 'todos' ? dispatch(toggleTodo(todoToToggle)) : dispatch(toggleGoal(todoToToggle)) }
-    dispatch(toggleTodo(todoToToggle))
   };
 
   return (
@@ -69,15 +47,15 @@ const Task = ({task, userChoice, ind, durationDaysNum, type, renderOnScale}) => 
           secondaryAction={
             <Checkbox
               edge="end"
-              onClick={handleToggle(ind)}
-              checked={checked.indexOf(ind) === 1}
+              onClick={toggleTask(task)}
+              checked={task.completed}
               inputProps={{ 'aria-labelledby': labelId }}
             />
           }
           disablePadding
         >
           <Button onClick={() => removeTask(task.id)}><DeleteIcon /></Button>
-          <Button onClick={toggleIsFavorite}>{isFav ? <FavoriteIcon color="favColor" /> : <FavoriteBorderRoundedIcon color="favColor" />}</Button>
+          <Button onClick={toggleIsFavorite}>{task.isFavorite ? <FavoriteIcon color="favColor" /> : <FavoriteBorderRoundedIcon color="favColor" />}</Button>
           <ListItemText>{task.text}</ListItemText>
         </StyledListItem>
         :
@@ -89,7 +67,7 @@ const Task = ({task, userChoice, ind, durationDaysNum, type, renderOnScale}) => 
             {task.text}
           </TableCell>
           <TableCell align="center">{task.date}</TableCell>
-          <TableCell align="center">{task.completed ? <Chip label="completed" color='completedTaskColor' /> : <Chip label="incomplete" color="uncompletedTaskColor" />}</TableCell>
+          <TableCell align="center">{task.completed ? <Chip label="completed" color='completedTaskColor' onClick={toggleTask(task)} /> : <Chip label="incomplete" color="uncompletedTaskColor" onClick={toggleTask(task)}/>}</TableCell>
           <TableCell align="center">{durationDaysNum > 0 ? `${durationDaysNum}` : null} {durationDaysNum > 0 ? 'days ago' : 'today'} </TableCell>
           <TableCell align="center">
             {renderOnScale(task.hardness)}
@@ -98,7 +76,6 @@ const Task = ({task, userChoice, ind, durationDaysNum, type, renderOnScale}) => 
         </TableRow>
       }
     </>
-
   )
 }
 

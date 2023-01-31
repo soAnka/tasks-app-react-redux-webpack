@@ -3,10 +3,11 @@ import {connect, useDispatch} from 'react-redux'
 import Home from './Home';
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
 import Root from '../layouts/Root';
-import TodosList from './TodosList';
+import TasksList from './TasksList';
 import { handleInitialData } from '../actions/shared';
 import TodoOrGoal from './TodoOrGoal';
 import Create from './Create';
+import Favorites from './Favorites';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -14,8 +15,9 @@ const router = createBrowserRouter(
             <Route index element={<Home />} />
             <Route  path="/start"  element={<TodoOrGoal />} />
             <Route path="/add" element={<Create />} />
-            <Route path="/todos" element={<TodosList />} />
-            <Route path="/goals" element={<TodosList />} />
+            <Route path="/todos" element={<TasksList />} />
+            <Route path="/goals" element={<TasksList />} />
+            <Route path="/favorites" element={<Favorites />} />
         </Route>
     )
 );
@@ -23,7 +25,6 @@ const router = createBrowserRouter(
 
   const App = () => {
     const dispatch = useDispatch()
-
 
     useEffect(()=> {
         dispatch(handleInitialData())
@@ -34,14 +35,4 @@ const router = createBrowserRouter(
     )
 }
 
-
-const mapStateToProps = ({todos, goals, userChoice}) => {
-
-    return {
-        userChoice,
-        todos,
-        goals,
-    }
-}
-
-export default connect(mapStateToProps)(App);
+export default App;

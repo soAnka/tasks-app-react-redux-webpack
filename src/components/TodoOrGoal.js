@@ -1,18 +1,11 @@
 import React from "react";
-import { connect, useDispatch } from "react-redux";
-import { setUserChoice } from '../actions/userChoice';
 import Grid from '@mui/material/Grid';
 import { ContentBox } from "../styles/components/TodoOrGoal";
-import OptionBtn from "./StartBtn";
+import OptionsMenu from "./OptionsMenu";
 
 
 const TodoOrGoal = () => {
-    const dispatch = useDispatch();
-    const options = ['todos', 'goals']
-
-    const choiceHandler = (userOption) => {
-        dispatch(setUserChoice(userOption))
-    }
+    const menuOptions = ['todos', 'goals']
 
     return (
         <Grid container p={4} className="section_container">
@@ -30,8 +23,7 @@ const TodoOrGoal = () => {
                     <ContentBox sx={{ height: '70vh' }} className='start_box_buttons' p={4}>
                         <div className="decoration_line"></div>
                         <p>Where would you like to start?</p>
-                        {options.map((opt) => <OptionBtn key={opt} userOpt={opt} choiceHandler={choiceHandler} />
-                        )}
+                        <OptionsMenu menuType="start" options={menuOptions} />
                     </ContentBox>
                 </Grid>
             </Grid>
@@ -39,8 +31,4 @@ const TodoOrGoal = () => {
     )
 }
 
-const mapStateToProps = ({ userChoice }) => {
-    return { userChoice }
-}
-
-export default connect(mapStateToProps)(TodoOrGoal);
+export default (TodoOrGoal);

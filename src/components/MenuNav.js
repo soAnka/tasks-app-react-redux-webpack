@@ -12,23 +12,37 @@ import ListItemText from '@mui/material/ListItemText';
 import HomeIcon from '@mui/icons-material/Home';
 import ListIcon from '@mui/icons-material/List';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import Badge from '@mui/material/Badge';
 
 
-function MenuNav({dataList, userChoice}) {
+function MenuNav({dataList, userChoice, favoritesList}) {
   const [open, setOpen] = useState(true)
 
   const handleDrawerToggle = () => {
     setOpen(!open)
   }
   const userOpt = userChoice === 'todos'? 'todos' : 'goals'
+
   const navItems = [
     { id: 0, link: "/", text: 'Home', ico: <HomeIcon /> },
     { id: 1, link: "/add", text: 'Add', ico: <BorderColorIcon /> },
-    { id: 2, link: `/${userOpt}`, text: userChoice === 'todos'? 'Todos' : 'Goals', ico: <ListIcon /> }
+    { id: 3, link: `/${userOpt}`, text: userChoice === 'todos'? 'Todos' : 'Goals', ico: <ListIcon /> },
+    { id: 4, link: "/favorites", text: 'Favorites', ico: <FavoriteBorderIcon /> },
   ]
+
+  const checkForBadge = (text) => {
+
+    if(text === 'Todos' || text === 'Goals') {
+      return <Badge badgeContent={dataList.length} color="secondary" />
+    } else if(text==='Favorites') {
+      return <Badge badgeContent={favoritesList.length} color="secondary" />
+    } else {
+      return;
+    }
+  }
 
   return (
 
@@ -58,7 +72,7 @@ function MenuNav({dataList, userChoice}) {
                       justifyContent: 'center',
                     }}
                   >
-                    {item.text === 'Todos' ? <Badge badgeContent={dataList.length} color="secondary" /> : null}
+                    {checkForBadge(item.text)}
                     {item.ico}
                   </ListItemIcon>
                   <ListItemText primary={item.text} sx={{ opacity: open ? 1 : 0 }} />
@@ -77,9 +91,11 @@ function MenuNav({dataList, userChoice}) {
   )
 }
 
-const mapStateToProps = ({ todos, userChoice }) => {
-  const dataList = Object.keys(todos).map((t) => [todos[t]])
-  return { dataList, userChoice }
+const mapStateToProps = ({ todos,goals, userChoice }) => {
+  const dataList = userChoice === 'todos' ? Object.keys(todos).map((t) => todos[t]) : Object.keys(goals).map((g) => goals[g])
+  const favoritesList = dataList.filter(favTask=>favTask.isFavorite)
+
+  return { dataList, userChoice, favoritesList }
 }
 
 export default connect(mapStateToProps)(MenuNav);

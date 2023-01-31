@@ -1,4 +1,4 @@
-
+  
   export const addTodo = (todo) => {
     return {
         type: 'todos/addTodo',
@@ -24,5 +24,12 @@
     return {
       type: 'todos/receiveTodos',
       todos
+    }
+  }
+
+  export const toggleFavTodo = (favTodo) => {
+    return {
+        type: 'todos/toggleFavTodo',
+        favTodo,
     }
   }

@@ -19,10 +19,16 @@ export const toggleGoal = goal => {
   }
 }
 
-
 export const receiveGoals = (goals) => {
   return {
     type: 'goals/receiveGoals',
     goals
+  }
+}
+
+export const toggleFavGoal = (favGoal) => {
+  return {
+      type: 'goals/toggleFavGoal',
+      favGoal,
   }
 }

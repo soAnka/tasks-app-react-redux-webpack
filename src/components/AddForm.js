@@ -8,7 +8,8 @@ import Box from '@mui/material/Box';
 import Rating from '@mui/material/Rating';
 import CircleIcon from '@mui/icons-material/Circle';
 import Alert from '@mui/material/Alert';
-import { AddBtn, Item, ItemHeader } from '../styles/components/AddTodo.style';
+import { StyledAddBtn, StyledItem, StyledItemHeader } from '../styles/components/AddTodo.style';
+import { setTaskFilter } from '../actions/filters';
 
 const labels = {
     1: 'Super easy!',
@@ -40,11 +41,12 @@ const AddForm = ({userChoice}) => {
             userChoice === 'todos' ? dispatch(addTodo(todo)) : dispatch(addGoal(todo))
             setText('')
             setValue(1)
-            setSuccessInfo(`New todo was added!`)
+            setSuccessInfo(`New item was added!`)
+            dispatch(setTaskFilter('all'))
         } else {
-            setError('Input is empty. Please add some text - title of your todo.')
+            setError('Input is empty. Please add some text - title of your task.')
+            setSuccessInfo('')
         }
-        // setSuccessInfo('')
     }
 
     const handleChange = (e) => {
@@ -54,18 +56,18 @@ const AddForm = ({userChoice}) => {
 
 
     return (
-        <Item >
-            <ItemHeader p={1}>
+        <StyledItem >
+            <StyledItemHeader p={1}>
                 <strong>Title</strong><i> of your new {userChoice.charAt(0).toUpperCase().concat(userChoice.slice(1, 4))}</i>
-            </ItemHeader>
+            </StyledItemHeader>
             <form>
                 {error ? <Alert severity="info">{error}</Alert> : null}
                 {successInfo ? <Alert severity="success">{successInfo}</Alert> : null}
-                <input placeholder='Fill the input with your new todo' type="text" ref={inputAdd} value={text} onChange={handleChange} />
+                <input placeholder='Fill the input with your new task' type="text" ref={inputAdd} value={text} onChange={handleChange} />
             </form>
-            <ItemHeader p={1}>
+            <StyledItemHeader p={1}>
                 <strong>Hardness</strong><i> of your new {userChoice.charAt(0).toUpperCase().concat(userChoice.slice(1, 4))}</i>
-            </ItemHeader>
+            </StyledItemHeader>
             <Rating
                 name="hover-feedback"
                 value={value}
@@ -74,7 +76,7 @@ const AddForm = ({userChoice}) => {
                 onChange={(event, newValue) => {
                     setValue(newValue);
                 }}
-                onChangeActive={(event, newHover) => {
+                onChangeActive={(newHover) => {
                     setHover(newHover);
                 }}
                 icon={<CircleIcon fontSize='inherit' />}
@@ -83,10 +85,10 @@ const AddForm = ({userChoice}) => {
             {value !== null && (
                 <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
             )}
-            <AddBtn variant='contained' onClick={handleSubmit} startIcon={<AddIcon />}>
+            <StyledAddBtn variant='contained' onClick={handleSubmit} startIcon={<AddIcon />}>
                 Add
-            </AddBtn>
-        </Item>
+            </StyledAddBtn>
+        </StyledItem>
     )
 }
 
