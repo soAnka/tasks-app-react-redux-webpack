@@ -36,7 +36,7 @@ let goals = {
   "gd352vodupe1dqz9emx13l": {
     id: "gd352vodupe1dqz9emx13l",
     text: 'Read 100 books',
-    completed: false,
+    completed: true,
     hardness: 2,
     isFavorite: true,
     date: generateStartDate()

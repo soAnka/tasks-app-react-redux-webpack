@@ -33,7 +33,7 @@ export const StyledToggleGroup = styled(ToggleButtonGroup)(() => ({
     'button:first-of-type': {
         borderRadius: '25px 0 0 25px'
     },
-    'button:first-of-type(2)': {
+    'button:nth-of-type(2)': {
         borderRadius: '0 25px 25px 0'
     },
     'button:nth-of-type(3)': {
