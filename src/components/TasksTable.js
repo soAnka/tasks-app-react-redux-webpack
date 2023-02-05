@@ -25,35 +25,31 @@ function taskDuration() {
 }
 
 const TasksTable = ({ dataList, filterChoice }) => {
+
+  const tableCell = ['Title', 'Date', 'Status','Duration', 'Complexity', 'Remove']
+
   const renderFiltered = () => {
 
     let filtered = dataList
+    let completedOrUncompleted = filterChoice === 'completed' || filterChoice === 'uncompleted'
 
-    switch (filterChoice) {
-      case 'completed':
-        return filtered = dataList.filter(t => t.completed)
-      case 'uncompleted':
-        return filtered = dataList.filter(t => !t.completed)
-      case 'all':
-        return filtered = dataList
-      default:
-        dataList
-    }
+    if(completedOrUncompleted) {
+      filtered = filterChoice === 'completed'? dataList.filter(t => t.completed) : dataList.filter(t => !t.completed)
+    } 
+
     return filtered
   }
+
   const filteredTasks = renderFiltered()
-  
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Title</TableCell>
-            <TableCell align="center">Date</TableCell>
-            <TableCell align="center">Status</TableCell>
-            <TableCell align="center">Duration</TableCell>
-            <TableCell align="center">Hardness</TableCell>
-            <TableCell align="center">Remove</TableCell>
+            {tableCell.map((tc=>{
+                return <TableCell key={tc} align="center">{tc}</TableCell>
+            }))}
           </TableRow>
         </TableHead>
         <TableBody>

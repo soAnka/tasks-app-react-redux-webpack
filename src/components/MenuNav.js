@@ -34,14 +34,16 @@ function MenuNav({dataList, userChoice, favoritesList}) {
   ]
 
   const checkForBadge = (text) => {
-
-    if(text === 'Todos' || text === 'Goals') {
-      return <Badge badgeContent={dataList.length} color="secondary" />
-    } else if(text==='Favorites') {
-      return <Badge badgeContent={favoritesList.length} color="secondary" />
-    } else {
-      return;
+    const texts = {
+      'Todos': dataList.length,
+      'Goals': dataList.length,
+      'Favorites': favoritesList.length
     }
+   
+    let badgeNum = texts[text] || 0
+
+    return <Badge badgeContent={badgeNum} color="secondary" />
+
   }
 
   return (

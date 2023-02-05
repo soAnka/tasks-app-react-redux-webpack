@@ -10,7 +10,7 @@ import { setTaskFilter } from '../actions/filters';
 import OptionsMenu from './OptionsMenu';
 
 
-const Home = ({filterChoice}) => {
+const Home = ({ filterChoice }) => {
 
     const menuOptions = ['all', 'completed', 'uncompleted']
 
@@ -20,7 +20,13 @@ const Home = ({filterChoice}) => {
                 <h1>Home</h1>
             </Grid>
             <Grid item xs={12} p={2}>
-            <OptionsMenu menuType="toggle" methodToDispatch={setTaskFilter} activeChoice={filterChoice} options={menuOptions} className="tasks_status_options" />
+                <OptionsMenu
+                    menuType="toggle"
+                    methodToDispatch={setTaskFilter}
+                    activeChoice={filterChoice}
+                    options={menuOptions}
+                    className="tasks_status_options"
+                />
             </Grid>
             <Grid container spacing={2} >
                 <Grid item xs={12} sm={12} md={7} >
@@ -37,7 +43,7 @@ const Home = ({filterChoice}) => {
                         </Grid>
                         <Grid item>
                             <StyledItem sx={{ minHeight: 385 }}>
-                                <TasksLayout title="List" children={<TasksList/>} />
+                                <TasksLayout title="List" children={<TasksList />} />
                             </StyledItem>
                         </Grid>
                     </Grid>

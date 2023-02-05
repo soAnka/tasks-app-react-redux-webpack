@@ -23,7 +23,7 @@ function getLabelText(value) {
     return `${value} Circle${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
-const AddForm = ({userChoice}) => {
+const AddForm = ({ userChoice }) => {
     const [value, setValue] = React.useState(1);
     const [hover, setHover] = React.useState(-1);
     const [text, setText] = useState('')
@@ -51,7 +51,7 @@ const AddForm = ({userChoice}) => {
 
     const handleChange = (e) => {
         setText(e.target.value)
-        document.activeElement === inputAdd.current ? (setError(null), setSuccessInfo('')) :  setError('')
+        document.activeElement === inputAdd.current ? (setError(null), setSuccessInfo('')) : setError('')
     }
 
 
@@ -66,7 +66,7 @@ const AddForm = ({userChoice}) => {
                 <input placeholder='Fill the input with your new task' type="text" ref={inputAdd} value={text} onChange={handleChange} />
             </form>
             <StyledItemHeader p={1}>
-                <strong>Hardness</strong><i> of your new {userChoice.charAt(0).toUpperCase().concat(userChoice.slice(1, 4))}</i>
+                <strong>Complexity</strong><i> of your new {userChoice.charAt(0).toUpperCase().concat(userChoice.slice(1, 4))}</i>
             </StyledItemHeader>
             <Rating
                 name="hover-feedback"
