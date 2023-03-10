@@ -1,9 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import Task from "./tasks/Task";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import List from "@mui/material/List";
+import { Grid, Box, List } from "@mui/material";
 
 const Favorites = ({ userChoice, favoritesList }) => {
   return (

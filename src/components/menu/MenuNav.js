@@ -4,18 +4,22 @@ import { NavLink } from "react-router-dom";
 import { Drawer } from "../../styles/components/MenuNav.style";
 import Box from "@mui/material/Box";
 import { IconButton } from "@mui/material";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import HomeIcon from "@mui/icons-material/Home";
+import {
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  Badge,
+} from "@mui/material";
+import {
+  Home,
+  ChevronLeft,
+  ChevronRight,
+  FavoriteBorder,
+  BorderColor,
+} from "@mui/icons-material";
 import ListIcon from "@mui/icons-material/List";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import BorderColorIcon from "@mui/icons-material/BorderColor";
-import Badge from "@mui/material/Badge";
 
 function MenuNav({ dataList, userChoice, favoritesList }) {
   const [open, setOpen] = useState(true);
@@ -26,8 +30,8 @@ function MenuNav({ dataList, userChoice, favoritesList }) {
   const userOpt = userChoice === "todos" ? "todos" : "goals";
 
   const navItems = [
-    { id: 0, link: "/", text: "Home", ico: <HomeIcon /> },
-    { id: 1, link: "/add", text: "Add", ico: <BorderColorIcon /> },
+    { id: 0, link: "/", text: "Home", ico: <Home /> },
+    { id: 1, link: "/add", text: "Add", ico: <BorderColor /> },
     {
       id: 3,
       link: `/${userOpt}`,
@@ -38,7 +42,7 @@ function MenuNav({ dataList, userChoice, favoritesList }) {
       id: 4,
       link: "/favorites",
       text: "Favorites",
-      ico: <FavoriteBorderIcon />,
+      ico: <FavoriteBorder />,
     },
   ];
 
@@ -93,7 +97,7 @@ function MenuNav({ dataList, userChoice, favoritesList }) {
         </List>
         <Box>
           <IconButton onClick={handleDrawerToggle} size="small">
-            {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            {open ? <ChevronLeft /> : <ChevronRight />}
           </IconButton>
         </Box>
       </Drawer>

@@ -3,11 +3,10 @@ import { connect, useDispatch } from "react-redux";
 import { addTodo } from "../../actions/todo";
 import { addGoal } from "../../actions/goals";
 import { formatNewTodo } from "../../utils/_DATA";
-import AddIcon from "@mui/icons-material/Add";
-import Box from "@mui/material/Box";
-import Rating from "@mui/material/Rating";
+import { Box, Alert, Rating } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
-import Alert from "@mui/material/Alert";
+import AddIcon from "@mui/icons-material/Add";
+
 import {
   StyledAddBtn,
   StyledItem,

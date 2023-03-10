@@ -1,17 +1,17 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { removeTodo, toggleFavTodo, toggleTodo } from "../../actions/todo";
-import Chip from "@mui/material/Chip";
-import ListItemText from "@mui/material/ListItemText";
 import { connect } from "react-redux";
-import Checkbox from "@mui/material/Checkbox";
 import { removeGoal, toggleFavGoal, toggleGoal } from "../../actions/goals";
-import { Button } from "@mui/material";
-import DeleteIcon from "@mui/icons-material/Delete";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteBorderRoundedIcon from "@mui/icons-material/FavoriteBorderRounded";
-import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
+import { Delete, Favorite, FavoriteBorderRounded } from "@mui/icons-material";
+import {
+  TableRow,
+  TableCell,
+  Button,
+  Checkbox,
+  ListItemText,
+  Chip,
+} from "@mui/material";
 import { StyledListItem } from "../../styles/components/Task";
 
 const Task = ({
@@ -67,13 +67,13 @@ const Task = ({
           disablePadding
         >
           <Button onClick={() => removeTask(task.id)}>
-            <DeleteIcon />
+            <Delete />
           </Button>
           <Button onClick={toggleIsFavorite}>
             {task.isFavorite ? (
-              <FavoriteIcon color="favColor" />
+              <Favorite color="favColor" />
             ) : (
-              <FavoriteBorderRoundedIcon color="favColor" />
+              <FavoriteBorderRounded color="favColor" />
             )}
           </Button>
           <ListItemText>{task.text}</ListItemText>
@@ -115,7 +115,7 @@ const Task = ({
                   : dispatch(removeGoal(task.id))
               }
             >
-              <DeleteIcon />
+              <Delete />
             </Button>
           </TableCell>
         </TableRow>

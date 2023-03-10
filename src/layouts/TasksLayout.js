@@ -1,7 +1,6 @@
-import { Grid } from "@mui/material";
-import { Box } from "@mui/system";
 import React from "react";
 import { connect } from "react-redux";
+import { Grid, Box } from "@mui/material";
 import Title from "../components/Title";
 
 const TasksLayout = ({ userChoice, children, componentType }) => {

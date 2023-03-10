@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { lazy, Suspense, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import Home from "./Home";
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -8,11 +7,13 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Root from "../layouts/Root";
-import TasksList from "./tasks/TasksList";
 import { handleInitialData } from "../actions/shared";
 import TodoOrGoal from "./TodoOrGoal";
-import Create from "./Create";
-import Favorites from "./Favorites";
+
+const TasksList = lazy(() => import("./tasks/TasksList"));
+const Favorites = lazy(() => import("./Favorites"));
+const Create = lazy(() => import("./Create"));
+const Home = lazy(() => import("./Home"));
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -34,7 +35,11 @@ const App = () => {
     dispatch(handleInitialData());
   }, []);
 
-  return <RouterProvider router={router} />;
+  return (
+    <Suspense fallback={<div>loading...</div>}>
+      <RouterProvider router={router} />
+    </Suspense>
+  );
 };
 
 export default App;

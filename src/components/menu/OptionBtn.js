@@ -3,9 +3,6 @@ import { useDispatch } from "react-redux";
 import { setUserChoice } from "../../actions/userChoice";
 import { StartBtn } from "../../styles/components/TodoOrGoal";
 import { StyledToggleBtn } from "../../styles/components/ToggleOptions";
-// import { setUserChoice } from "../actions/userChoice";
-// import { StartBtn } from "../styles/components/TodoOrGoal";
-// import { StyledToggleBtn } from "../styles/components/ToggleOptions";
 
 const OptionBtn = ({ menuType, value, className, methodToDispatch }) => {
   const dispatch = useDispatch();

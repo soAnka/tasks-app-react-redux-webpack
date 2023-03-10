@@ -1,14 +1,15 @@
+const { merge } = require("webpack-merge");
+const common = require("./webpack.common.js");
 const path = require("path");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-module.exports = {
+module.exports = merge(common, {
   mode: "development",
-  entry: {
-    index: "./src/app.js",
-  },
+  devtool: "inline-source-map",
   output: {
-    filename: "bundle.js",
+    filename: "[name].bundle.js",
     path: path.join(__dirname, "public"),
-    clean: false,
+    clean: true,
   },
   module: {
     rules: [
@@ -19,15 +20,15 @@ module.exports = {
       },
       {
         test: /\.m?s?css$/,
-        use: ["style-loader", "css-loader", "sass-loader"],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
       },
       {
-        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        exclude: /node_modules/,
         type: "asset/resource",
       },
     ],
   },
-  devtool: "inline-source-map",
   devServer: {
     static: {
       directory: path.join(__dirname, "public"),
@@ -37,4 +38,4 @@ module.exports = {
     open: true,
     historyApiFallback: true,
   },
-};
+});

@@ -1,9 +1,8 @@
 import React from "react";
-import MenuNav from "../components/menu/MenuNav";
-import Grid from "@mui/material/Grid";
 import { Outlet } from "react-router-dom";
-import Box from "@mui/material/Box";
 import { connect } from "react-redux";
+import MenuNav from "../components/menu/MenuNav";
+import { Grid, Box } from "@mui/material";
 import TodoOrGoal from "../components/TodoOrGoal";
 import OptionsMenu from "../components/menu/OptionsMenu";
 import { setUserChoice } from "../actions/userChoice";
@@ -23,9 +22,6 @@ const Root = (props) => {
                 options={menuOptions}
                 activeChoice={props.userChoice}
               />
-              {/* <StyledToggleGroup>
-                                {['todos', 'goals'].map((opt) => <OptionBtn className={props.userChoice === opt ? 'active' : null} key={opt} type="toggle" value={opt} >{opt}</OptionBtn>)}
-                            </StyledToggleGroup> */}
               <Outlet></Outlet>
             </Box>
           </div>
