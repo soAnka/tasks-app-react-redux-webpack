@@ -23,26 +23,30 @@ import ListIcon from "@mui/icons-material/List";
 
 function MenuNav({ dataList, userChoice, favoritesList }) {
   const [open, setOpen] = useState(true);
+  const [activeItem, setActiveItem] = useState(0);
 
   const handleDrawerToggle = () => {
     setOpen(!open);
   };
+
   const userOpt = userChoice === "todos" ? "todos" : "goals";
 
   const navItems = [
-    { id: 0, link: "/", text: "Home", ico: <Home /> },
-    { id: 1, link: "/add", text: "Add", ico: <BorderColor /> },
+    { id: 0, link: "/", text: "Home", ico: <Home />, isActive: true },
+    { id: 1, link: "/add", text: "Add", ico: <BorderColor />, isActive: false },
     {
       id: 3,
       link: `/${userOpt}`,
       text: userChoice === "todos" ? "Todos" : "Goals",
       ico: <ListIcon />,
+      isActive: false,
     },
     {
       id: 4,
       link: "/favorites",
       text: "Favorites",
       ico: <FavoriteBorder />,
+      isActive: false,
     },
   ];
 
@@ -62,10 +66,18 @@ function MenuNav({ dataList, userChoice, favoritesList }) {
     <div className="menu_container">
       <Drawer variant="permanent" open={open}>
         <List>
-          <Box className="logo_box">L</Box>
+          <Box className="logo_box">
+            <div>t.</div>
+          </Box>
           {navItems.map((item) => {
             return (
-              <ListItem key={item.id} disablePadding sx={{ display: "block" }}>
+              <ListItem
+                key={item.id}
+                disablePadding
+                sx={{ display: "block" }}
+                onClick={() => setActiveItem(item.id)}
+                className={item.id === activeItem ? "activeItem" : null}
+              >
                 <ListItemButton
                   component={NavLink}
                   activeclassname="active"

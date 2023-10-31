@@ -5,12 +5,12 @@ const Title = ({ userChoice, titleType, componentType, category }) => {
   return (
     <div>
       {titleType === "main" ? (
-        <h1>
+        <p>
           {userChoice.charAt(0).toUpperCase().concat(userChoice.slice(1, 5))}{" "}
           {componentType}
-        </h1>
+        </p>
       ) : (
-        <StyledItemHeader p={1}>
+        <StyledItemHeader pt={2}>
           <strong>{category}</strong>
           <i>
             {" "}

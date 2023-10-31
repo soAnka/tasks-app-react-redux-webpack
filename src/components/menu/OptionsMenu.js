@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { StyledToggleGroup } from "../../styles/components/ToggleOptions";
 import OptionBtn from "./OptionBtn";
@@ -13,17 +13,15 @@ const OptionsMenu = ({
   return menuType === "toggle" ? (
     <StyledToggleGroup className={className} value={activeChoice}>
       {options.map((opt) => (
-        <Suspense>
-          <OptionBtn
-            methodToDispatch={methodToDispatch}
-            className={activeChoice === opt ? "active" : null}
-            key={opt}
-            menuType={menuType}
-            value={opt}
-          >
-            {opt}
-          </OptionBtn>
-        </Suspense>
+        <OptionBtn
+          methodToDispatch={methodToDispatch}
+          className={activeChoice === opt ? "active" : null}
+          key={opt}
+          menuType={menuType}
+          value={opt}
+        >
+          {opt}
+        </OptionBtn>
       ))}
     </StyledToggleGroup>
   ) : (

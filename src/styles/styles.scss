@@ -10,8 +10,19 @@ body {
   background-color: $primary-background;
 }
 
+.logo_box {
+  font-family: Georgia, "Times New Roman", Times, serif;
+  font-weight: bold;
+  color: $primary-color;
+}
+.logo_box > div {
+  border: 1px solid $primary-color;
+  padding: 0.8rem 1rem;
+  border-radius: 100%;
+}
+
 .section_title {
-  color: #5e35b1;
+  color: $primary-color;
 }
 .menu_container {
   border-radius: 50px;
@@ -28,7 +39,7 @@ body {
 
 .container_cover {
   width: auto;
-  background-color: #6b1eaf;
+  background-color: $primary-color;
   background: linear-gradient(
       0deg,
       rgba(80, 20, 132, 0.9),
@@ -133,4 +144,7 @@ body {
   height: 100vh;
 }
 
-// TODO: RWD
+.title_box {
+  width: 100%;
+  color: black;
+}

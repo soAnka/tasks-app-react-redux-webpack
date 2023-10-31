@@ -4,15 +4,12 @@ import { removeTodo, toggleFavTodo, toggleTodo } from "../../actions/todo";
 import { connect } from "react-redux";
 import { removeGoal, toggleFavGoal, toggleGoal } from "../../actions/goals";
 import { Delete, Favorite, FavoriteBorderRounded } from "@mui/icons-material";
+import { TableCell, Button, Checkbox, ListItemText, Chip } from "@mui/material";
 import {
-  TableRow,
-  TableCell,
-  Button,
-  Checkbox,
-  ListItemText,
-  Chip,
-} from "@mui/material";
-import { StyledListItem } from "../../styles/components/Task";
+  StyledListItem,
+  StyledTableCell,
+  StyledTableRow,
+} from "../../styles/components/Task";
 
 const Task = ({
   task,
@@ -79,15 +76,15 @@ const Task = ({
           <ListItemText>{task.text}</ListItemText>
         </StyledListItem>
       ) : (
-        <TableRow
+        <StyledTableRow
           key={task.id}
           sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
         >
-          <TableCell component="th" scope="row">
+          <StyledTableCell component="th" scope="row">
             {task.text}
-          </TableCell>
-          <TableCell align="center">{task.date}</TableCell>
-          <TableCell align="center">
+          </StyledTableCell>
+          <TableCell>{task.date}</TableCell>
+          <TableCell>
             {task.completed ? (
               <Chip
                 label="completed"
@@ -102,12 +99,12 @@ const Task = ({
               />
             )}
           </TableCell>
-          <TableCell align="center">
+          <TableCell>
             {durationDaysNum > 0 ? `${durationDaysNum}` : null}{" "}
             {durationDaysNum > 0 ? "days ago" : "today"}{" "}
           </TableCell>
-          <TableCell align="center">{renderOnScale(task.hardness)}</TableCell>
-          <TableCell align="center">
+          <TableCell>{renderOnScale(task.hardness)}</TableCell>
+          <TableCell>
             <Button
               onClick={() =>
                 userChoice === "todos"
@@ -118,7 +115,7 @@ const Task = ({
               <Delete />
             </Button>
           </TableCell>
-        </TableRow>
+        </StyledTableRow>
       )}
     </>
   );

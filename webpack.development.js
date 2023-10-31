@@ -6,11 +6,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 module.exports = merge(common, {
   mode: "development",
   devtool: "inline-source-map",
-  output: {
-    filename: "[name].bundle.js",
-    path: path.join(__dirname, "public"),
-    clean: true,
-  },
+  plugins: [new MiniCssExtractPlugin({ filename: "[name].bundle.min.css" })],
   module: {
     rules: [
       {
@@ -31,7 +27,7 @@ module.exports = merge(common, {
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, "public"),
+      directory: path.join(__dirname, "build"),
     },
     compress: true,
     port: 9000,

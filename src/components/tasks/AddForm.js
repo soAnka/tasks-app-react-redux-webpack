@@ -1,16 +1,12 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { addTodo } from "../../actions/todo";
 import { addGoal } from "../../actions/goals";
 import { formatNewTodo } from "../../utils/_DATA";
-import { Box, Alert, Rating } from "@mui/material";
+import { Box, Alert, Grid, Rating } from "@mui/material";
 import CircleIcon from "@mui/icons-material/Circle";
 import AddIcon from "@mui/icons-material/Add";
-
-import {
-  StyledAddBtn,
-  StyledItem,
-} from "../../styles/components/AddTodo.style";
+import { StyledAddBtn } from "../../styles/components/AddTodo.style";
 import { setTaskFilter } from "../../actions/filters";
 import Title from "../Title";
 
@@ -21,17 +17,27 @@ const labels = {
   4: "Difficult",
   5: "Super difficult!",
 };
+const colorComplexity = {
+  0: "#008002",
+  1: "#008002",
+  2: "#008002",
+  3: "rgb(228, 165, 7)",
+  4: "rgb(196, 0, 0)",
+  5: "rgb(196, 0, 0)",
+};
 
 function getLabelText(value) {
   return `${value} Circle${value !== 1 ? "s" : ""}, ${labels[value]}`;
 }
 
 const AddForm = ({ userChoice }) => {
+  const [color, setColor] = useState("#008002");
   const [value, setValue] = useState(1);
   const [hover, setHover] = useState(-1);
   const [text, setText] = useState("");
   const [error, setError] = useState(null);
   const [successInfo, setSuccessInfo] = useState("");
+
   const inputAdd = useRef(null);
   const dispatch = useDispatch();
 
@@ -46,6 +52,8 @@ const AddForm = ({ userChoice }) => {
         : dispatch(addGoal(todo));
       setText("");
       setValue(1);
+      setHover(1);
+      setColor(colorComplexity[value]);
       setSuccessInfo(`New item was added!`);
       dispatch(setTaskFilter("all"));
     } else {
@@ -62,7 +70,12 @@ const AddForm = ({ userChoice }) => {
   };
 
   return (
-    <StyledItem>
+    <Grid
+      container
+      justifyContent="center"
+      flexDirection="column"
+      alignItems="center"
+    >
       <form>
         {error ? <Alert severity="info">{error}</Alert> : null}
         {successInfo ? <Alert severity="success">{successInfo}</Alert> : null}
@@ -75,24 +88,36 @@ const AddForm = ({ userChoice }) => {
           onChange={handleChange}
         />
       </form>
-      <Title userChoice={userChoice} category="Complexity" />
-      <Rating
-        name="complexity-level"
-        value={value}
-        precision={1}
-        getLabelText={getLabelText}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
-        onChangeActive={(event, newHover) => {
-          setHover(newHover);
-        }}
-        icon={<CircleIcon fontSize="inherit" />}
-        emptyIcon={<CircleIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
-      />
-      {value !== null && (
-        <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
-      )}
+      <div>
+        <Title userChoice={userChoice} category="Complexity" />
+        <Rating
+          name="complexity-level"
+          value={value}
+          precision={1}
+          getLabelText={getLabelText}
+          onChangeActive={(event, newHover) => {
+            setHover(newHover);
+            setColor(colorComplexity[value]);
+          }}
+          onChange={(event, newValue) => {
+            setValue(newValue);
+            setColor(colorComplexity[value]);
+          }}
+          icon={
+            <CircleIcon
+              fontSize="inherit"
+              style={{ color: hover !== -1 ? colorComplexity[hover] : color }}
+            />
+          }
+          emptyIcon={
+            <CircleIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+          }
+        />
+        {value !== null && (
+          <Box sx={{ ml: 2 }}>{labels[hover !== -1 ? hover : value]}</Box>
+        )}
+      </div>
+
       <StyledAddBtn
         variant="contained"
         onClick={handleSubmit}
@@ -100,7 +125,7 @@ const AddForm = ({ userChoice }) => {
       >
         Add
       </StyledAddBtn>
-    </StyledItem>
+    </Grid>
   );
 };
 

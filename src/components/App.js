@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import {
   createBrowserRouter,
@@ -9,11 +9,10 @@ import {
 import Root from "../layouts/Root";
 import { handleInitialData } from "../actions/shared";
 import TodoOrGoal from "./TodoOrGoal";
-
-const TasksList = lazy(() => import("./tasks/TasksList"));
-const Favorites = lazy(() => import("./Favorites"));
-const Create = lazy(() => import("./Create"));
-const Home = lazy(() => import("./Home"));
+import Home from "./Home";
+import TasksList from "./tasks/TasksList";
+import Favorites from "./Favorites";
+import Create from "./Create";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -36,9 +35,11 @@ const App = () => {
   }, []);
 
   return (
-    <Suspense fallback={<div>loading...</div>}>
+    // <Suspense fallback={<div>loading...</div>}>
+    <div>
       <RouterProvider router={router} />
-    </Suspense>
+    </div>
+    // </Suspense>
   );
 };
 
